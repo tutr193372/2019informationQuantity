@@ -47,4 +47,3 @@ public interface FrequencerInterface {
      */
     int subByteFrequency(int start, int end);
 }
-
