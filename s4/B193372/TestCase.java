@@ -101,6 +101,7 @@ public class TestCase {
 	    double value;
 	    System.out.println("checking s4.B193372.InformationEstimator");
 	    
+	    
 	    /*テストケース*/
 	    myObject = new s4.B193372.InformationEstimator();
 	    myObject.setSpace("3210321001230123".getBytes());
@@ -117,6 +118,7 @@ public class TestCase {
 	    	System.out.print("return 0.0");
 	    }
 	    /*テストケースここまで*/
+	    
 	    
 	    myObject = new s4.B193372.InformationEstimator();
 	    myObject.setSpace("3210321001230123".getBytes());
