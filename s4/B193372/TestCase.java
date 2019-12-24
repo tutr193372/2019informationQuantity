@@ -39,7 +39,7 @@ public class TestCase {
 	    myObject = new s4.B193372.Frequencer();
 	    myObject.setSpace("Hi Ho Hi Ho".getBytes());
 	    freq = myObject.frequency();
-		if(freq =! -1){
+		if(freq == -1){
 			System.out.print("return -1");
 		}
 		
@@ -47,14 +47,14 @@ public class TestCase {
 		myObject.setSpace("Hi Ho Hi Ho".getBytes());
 	    myObject.setTarget("".getBytes());
 	    freq = myObject.frequency();
-	    if(freq =! -1){
+	    if(freq == -1){
 			System.out.print("return -1");
 		}
 		
 		myObject = new s4.B193372.Frequencer();
 		myObject.setTarget("H".getBytes());
 		freq = myObject.frequency();
-	    if(freq =! 0){
+	    if(freq == 0){
 			System.out.print("return 0");
 		}
 		
@@ -62,7 +62,7 @@ public class TestCase {
 		myObject.setTarget("H".getBytes());
 		myObject.setSpace("".getBytes());
 		freq = myObject.frequency();
-	    if(freq =! 0){
+	    if(freq == 0){
 			System.out.print("return 0");
 		}
 	    
@@ -100,6 +100,24 @@ public class TestCase {
 	    InformationEstimatorInterface myObject;
 	    double value;
 	    System.out.println("checking s4.B193372.InformationEstimator");
+	    
+	    /*テストケース*/
+	    myObject = new s4.B193372.InformationEstimator();
+	    myObject.setSpace("3210321001230123".getBytes());
+	    value = myObject.estimation();
+	    if(value == 0){
+	    	System.out.print("return 0.0");
+	    }
+	    
+	    myObject = new s4.B193372.InformationEstimator();
+	    myObject.setSpace("3210321001230123".getBytes());
+	    myObject.setTarget("".getBytes());
+	    value = myObject.estimation();
+	    if(value == 0){
+	    	System.out.print("return 0.0");
+	    }
+	    /*テストケースここまで*/
+	    
 	    myObject = new s4.B193372.InformationEstimator();
 	    myObject.setSpace("3210321001230123".getBytes());
 	    myObject.setTarget("0".getBytes());
