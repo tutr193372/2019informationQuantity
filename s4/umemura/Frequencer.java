@@ -190,11 +190,6 @@ public class Frequencer implements FrequencerInterface {
                 return 1;
             } else if (suffix_i[a] < myTarget[a]) {
                 return -1;
-            } else if (suffix_i[a] == myTarget[a]) {
-                System.out.println("a:" + a);
-                if (a == k - 1) {
-                    return 0;
-                }
             }
         }
 
@@ -227,7 +222,6 @@ public class Frequencer implements FrequencerInterface {
                 break;
             }
         }
-        System.out.println("start" + i);
         return i; // このコードは変更しなければならない。
     }
 
@@ -257,7 +251,6 @@ public class Frequencer implements FrequencerInterface {
             }
         }
 
-        System.out.println("end" + end);
         return i; // このコードは変更しなければならない。
     }
 
@@ -282,7 +275,7 @@ public class Frequencer implements FrequencerInterface {
              * 5:Ho 6:Ho Hi Ho 7:i Ho 8:i Ho Hi Ho 9:o A:o Hi Ho
              */
 
-            frequencerObject.setTarget("Ho".getBytes());
+            frequencerObject.setTarget("H".getBytes());
             //
             // **** Please write code to check subByteStartIndex, and subByteEndIndex
             //
