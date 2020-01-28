@@ -103,12 +103,13 @@ public class TestCase {
 	    
 	    
 	    /*テストケース*/
+	    
 	    myObject = new s4.B193372.InformationEstimator();
 	    myObject.setSpace("3210321001230123".getBytes());
 	    value = myObject.estimation();
 	    if(value == 0){
 	    	System.out.print("return 0.0");
-	    }
+		}
 	    
 	    myObject = new s4.B193372.InformationEstimator();
 	    myObject.setSpace("3210321001230123".getBytes());

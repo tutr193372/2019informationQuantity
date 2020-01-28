@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-﻿
-=======
->>>>>>> origin/master
 package s4.B193372;
 import java.lang.*;
 import s4.specification.*;
