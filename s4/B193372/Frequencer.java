@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 ﻿
+=======
+>>>>>>> origin/master
 package s4.B193372;
-
 import java.lang.*;
 import s4.specification.*;
 
 /*package s4.specification;
+<<<<<<< HEAD
   ここは、１回、２回と変更のない外部仕様である。 
+=======
+  ここは、１回、２回と変更のない外部仕様である。
+>>>>>>> origin/master
   public interface FrequencerInterface {     // This interface provides the design for frequency counter.
   void setTarget(byte  target[]); // set the data to search.
   void setSpace(byte  space[]);  // set the data to be searched target from.
