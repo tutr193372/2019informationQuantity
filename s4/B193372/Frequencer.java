@@ -3,11 +3,11 @@ import java.lang.*;
 import s4.specification.*;
 
 /*package s4.specification;
-<<<<<<< HEAD
+  <<<<<<< HEAD
   ここは、１回、２回と変更のない外部仕様である。 
-=======
+  =======
   ここは、１回、２回と変更のない外部仕様である。
->>>>>>> origin/master
+  >>>>>>> origin/master
   public interface FrequencerInterface {     // This interface provides the design for frequency counter.
   void setTarget(byte  target[]); // set the data to search.
   void setSpace(byte  space[]);  // set the data to be searched target from.
@@ -65,29 +65,40 @@ public class Frequencer implements FrequencerInterface {
         // if suffix_i = suffix_j, it returns 0;
 
         // ここにコードを記述せよ
-        byte[] suffix_i_byte = new byte[mySpace.length - i];
-        int tmp = 0;
-        for (int a = i; a < mySpace.length; a++) {
-            suffix_i_byte[tmp] = mySpace[a];
-            tmp++;
-        }
-        tmp = 0;
-        byte[] suffix_j_byte = new byte[mySpace.length - j];
-        for (int a = j; a < mySpace.length; a++) {
-            suffix_j_byte[tmp] = mySpace[a];
-            tmp++;
-        }
+	/*
+	  byte[] suffix_i_byte = new byte[mySpace.length - i];
+	  int tmp = 0;
+	  for (int a = i; a < mySpace.length; a++) {
+	  suffix_i_byte[tmp] = mySpace[a];
+	  tmp++;
+	  }
+	  tmp = 0;
+	  byte[] suffix_j_byte = new byte[mySpace.length - j];
+	  for (int a = j; a < mySpace.length; a++) {
+	  suffix_j_byte[tmp] = mySpace[a];
+	  tmp++;
+	  }
 
-        String suffix_i = new String(suffix_i_byte);
-        String suffix_j = new String(suffix_j_byte);
+	  String suffix_i = new String(suffix_i_byte);
+	  String suffix_j = new String(suffix_j_byte);
 
-        if (suffix_i.compareTo(suffix_j) > 0) {
-            return 1;
-        } else if (suffix_i.compareTo(suffix_j) < 0) {
-            return -1;
-        } else {
-            return 0;
+	  if (suffix_i.compareTo(suffix_j) > 0) {
+	  return 1;
+	  } else if (suffix_i.compareTo(suffix_j) < 0) {
+	  return -1;
+	  } else {
+	  return 0;
+	  }*/
+	int count = 0;
+        if(i < j)   count = mySpace.length - j;     // iとjの内、大きい方を開始位置とする
+        else if(i >= j) count = mySpace.length - i; // i=jならばiを参照する
+        for(int k=0; k<count; k++){
+            // mySpaceに格納されている文字バイトを比較する
+            if(mySpace[i+k] > mySpace[j+k]) return 1;       // i+k番地の要素の方が大きければ1を返す
+            else if(mySpace[i+k] < mySpace[j+k]) return -1; // j+k番地の方が大きければ-1
         }
+        // i<jならば1、i>jならば-1、i=jならば0を返す
+        return i < j ? 1 : i > j ? -1 : 0; 
 
         //
         // この行は変更しなければいけない。
@@ -106,8 +117,8 @@ public class Frequencer implements FrequencerInterface {
         }
         //
         // ここに、int suffixArrayをソートするコードを書け。
-        for (int i = 0; i < suffixArray.length - 1; i++) {
-            for (int j = suffixArray.length - 1; j > i; j--) {
+        for (int i = 0; i <  mySpace.length - 1; i++) {
+            for (int j =  mySpace.length - 1; j > i; j--) {
                 if (suffixCompare(suffixArray[j - 1], suffixArray[j]) == 1) {
                     int tmp = suffixArray[j - 1];
                     suffixArray[j - 1] = suffixArray[j];
@@ -175,13 +186,7 @@ public class Frequencer implements FrequencerInterface {
         //
         // ここに比較のコードを書け
         //
-
-        // mySpaceのコピー
-        byte[] _mySpace = new byte[mySpace.length];
-        for (int a = 0; a < mySpace.length - 1; a++) {
-            _mySpace[a] = mySpace[a];
-        }
-
+	/*
         byte[] suffix_i = new byte[mySpace.length - i];
         for (int a = i; a < mySpace.length; a++) {
             suffix_i[a - i] = mySpace[a];
@@ -193,6 +198,12 @@ public class Frequencer implements FrequencerInterface {
             } else if (suffix_i[a] < myTarget[a]) {
                 return -1;
             }
+	    }*/
+
+	for(int pos=0; pos<k-j; pos++){
+            // i+posがmySpaceの配列外に出る場合は終了しなければならない
+            if(i+pos >= mySpace.length || mySpace[i+pos] < myTarget[j+pos])   return -1;
+            else if(mySpace[i+pos] > myTarget[j+pos]) return 1;
         }
 
         return 0; // この行は変更しなければならない。
@@ -269,9 +280,9 @@ public class Frequencer implements FrequencerInterface {
     public static void main(String[] args) {
         Frequencer frequencerObject;
         try {
-            frequencerObject = new Frequencer();
-            frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
-            frequencerObject.printSuffixArray(); // you may use this line for DEBUG
+	    frequencerObject = new Frequencer();
+	    frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
+	    frequencerObject.printSuffixArray(); // you may use this line for DEBUG
             /*
              * Example from "Hi Ho Hi Ho" 0: Hi Ho 1: Ho 2: Ho Hi Ho 3:Hi Ho 4:Hi Ho Hi Ho
              * 5:Ho 6:Ho Hi Ho 7:i Ho 8:i Ho Hi Ho 9:o A:o Hi Ho

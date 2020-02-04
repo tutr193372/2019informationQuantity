@@ -96,7 +96,29 @@ public class InformationEstimator implements InformationEstimatorInterface{
             //int start = 0;
             end = myTarget.length;
             
-            value1 = f(myTarget,start,end);
+            //value1 = f(myTarget,start,end);
+
+
+	    double[] list = new double[myTarget.length];
+
+	    for(int i = 0; i < myTarget.length; i++){
+		if(i == 0){
+		    myFrequencer.setTarget(subBytes(myTarget, 0, 1));
+		    list[i] = iq(myFrequencer.frequency());
+		}else{
+		    double tmp = Double.MAX_VALUE;
+		    myFrequencer.setTarget(subBytes(myTarget, start, i+1));
+		    list[i] = iq(myFrequencer.frequency());
+		    
+		    for(int j=i;j>0;j--){
+			 myFrequencer.setTarget(subBytes(myTarget, j, i+1));
+			 tmp = list[j-1] + iq(myFrequencer.frequency());
+			 if(list[i]>tmp)list[i] = tmp;
+		    }
+		}
+	    }
+	   
+		
             /*
 	    while(start<myTarget.length) {
 		// System.out.write(myTarget[end]);
@@ -114,7 +136,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
             */
 
 	    // Get the minimal value in "value"
-	    if(value1 < value) value = value1;
+	    if(list[myTarget.length - 1] < value) value = list[myTarget.length - 1];
 	    //}
 	return value;
     }
@@ -122,7 +144,6 @@ public class InformationEstimator implements InformationEstimatorInterface{
     public static void main(String[] args) {
 	InformationEstimator myObject;
 	double value;
-        long startTime = System.nanoTime();
 	myObject = new InformationEstimator();
 	myObject.setSpace("3210321001230123".getBytes());
 	myObject.setTarget("0".getBytes());
@@ -137,12 +158,6 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	myObject.setTarget("00".getBytes());
 	value = myObject.estimation();
 	System.out.println(">00 "+value);
-        long endTime = System.nanoTime();
- 
-        System.out.println("開始時刻：" + startTime + " ms");
-        System.out.println("終了時刻：" + endTime + " ms");
-        System.out.println("処理時間：" + (endTime - startTime) + " ms");
-
     }
 }
 				  
