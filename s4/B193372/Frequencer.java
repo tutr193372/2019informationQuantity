@@ -2,12 +2,8 @@ package s4.B193372;
 import java.lang.*;
 import s4.specification.*;
 
-/*package s4.specification;
-  <<<<<<< HEAD
+/*
   ここは、１回、２回と変更のない外部仕様である。 
-  =======
-  ここは、１回、２回と変更のない外部仕様である。
-  >>>>>>> origin/master
   public interface FrequencerInterface {     // This interface provides the design for frequency counter.
   void setTarget(byte  target[]); // set the data to search.
   void setSpace(byte  space[]);  // set the data to be searched target from.
@@ -65,30 +61,7 @@ public class Frequencer implements FrequencerInterface {
         // if suffix_i = suffix_j, it returns 0;
 
         // ここにコードを記述せよ
-	/*
-	  byte[] suffix_i_byte = new byte[mySpace.length - i];
-	  int tmp = 0;
-	  for (int a = i; a < mySpace.length; a++) {
-	  suffix_i_byte[tmp] = mySpace[a];
-	  tmp++;
-	  }
-	  tmp = 0;
-	  byte[] suffix_j_byte = new byte[mySpace.length - j];
-	  for (int a = j; a < mySpace.length; a++) {
-	  suffix_j_byte[tmp] = mySpace[a];
-	  tmp++;
-	  }
-
-	  String suffix_i = new String(suffix_i_byte);
-	  String suffix_j = new String(suffix_j_byte);
-
-	  if (suffix_i.compareTo(suffix_j) > 0) {
-	  return 1;
-	  } else if (suffix_i.compareTo(suffix_j) < 0) {
-	  return -1;
-	  } else {
-	  return 0;
-	  }*/
+	
 	int count = 0;
         if(i < j)   count = mySpace.length - j;     // iとjの内、大きい方を開始位置とする
         else if(i >= j) count = mySpace.length - i; // i=jならばiを参照する
@@ -186,20 +159,7 @@ public class Frequencer implements FrequencerInterface {
         //
         // ここに比較のコードを書け
         //
-	/*
-        byte[] suffix_i = new byte[mySpace.length - i];
-        for (int a = i; a < mySpace.length; a++) {
-            suffix_i[a - i] = mySpace[a];
-        }
-
-        for (int a = 0; a < k; a++) {
-            if (suffix_i[a] > myTarget[a]) {
-                return 1;
-            } else if (suffix_i[a] < myTarget[a]) {
-                return -1;
-            }
-	    }*/
-
+	
 	for(int pos=0; pos<k-j; pos++){
             // i+posがmySpaceの配列外に出る場合は終了しなければならない
             if(i+pos >= mySpace.length || mySpace[i+pos] < myTarget[j+pos])   return -1;
@@ -227,15 +187,31 @@ public class Frequencer implements FrequencerInterface {
         // ここにコードを記述せよ。
         //
 
-        int index = 1;
-        int i;
-        for (i = 0; i < suffixArray.length; i++) {
-            index = targetCompare(suffixArray[i], start, end);
-            if (index == 0) {
-                break;
-            }
-        }
-        return i; // このコードは変更しなければならない。
+	int lower = 0;
+	int upper = suffixArray.length - 1;
+	int pos = upper + 1;
+	OUTER: while(lower <= upper){
+	    int mid = (lower + upper)/2;
+	    switch(targetCompare(suffixArray[mid],start,end)){
+	    case 0:
+		if(mid == 0){
+		    return 0;
+		}else if(targetCompare(suffixArray[mid - 1],start,end) == 0){
+		    upper = mid - 1;
+		}else{
+		    pos = mid;
+		    break OUTER;
+		}
+		break;
+	    case -1:
+		lower = mid + 1;
+		break;
+	    default:
+		upper = mid - 1;
+		break;
+	    }
+	}
+	return pos; // このコードは変更しなければならない。
     }
 
     private int subByteEndIndex(int start, int end) {
@@ -254,17 +230,35 @@ public class Frequencer implements FrequencerInterface {
         //
         // ここにコードを記述せよ
         //
-        int index = 1, index_before = 1;
-        int i;
-        for (i = 0; i < suffixArray.length; i++) {
-            index_before = index;
-            index = targetCompare(suffixArray[i], start, end);
-            if (index != 0 && index_before == 0) {
-                break;
-            }
-        }
-
-        return i; // このコードは変更しなければならない。
+	
+	int lower = 0;
+	int upper = suffixArray.length - 1;
+	int pos = upper + 1;
+	OUTER: while(lower <= upper){
+	    int mid = (lower + upper)/2;
+	    switch(targetCompare(suffixArray[mid],start,end)){
+	    case 0:
+		if(mid == 0){
+		    return 0;
+		}else if(mid == suffixArray.length - 1){
+		    pos = mid + 1;
+		    break OUTER;
+		}else if(targetCompare(suffixArray[mid + 1],start,end) == 0){
+		    lower = mid + 1;
+		}else{
+		    pos = mid + 1;
+		    break OUTER;
+		}
+		break;
+	    case -1:
+		lower = mid + 1;
+		break;
+	    default:
+		upper = mid - 1;
+		break;
+	    }
+	}
+	return pos; // このコードは変更しなければならない。
     }
 
     // Suffix Arrayを使ったプログラムのホワイトテストは、
@@ -288,7 +282,7 @@ public class Frequencer implements FrequencerInterface {
              * 5:Ho 6:Ho Hi Ho 7:i Ho 8:i Ho Hi Ho 9:o A:o Hi Ho
              */
 
-            frequencerObject.setTarget("H".getBytes());
+            frequencerObject.setTarget(" ".getBytes());
             //
             // **** Please write code to check subByteStartIndex, and subByteEndIndex
             //

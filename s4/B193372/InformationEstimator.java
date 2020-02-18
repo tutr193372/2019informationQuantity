@@ -1,5 +1,3 @@
-
-
 package s4.B193372;
 // Please modify to s4.Bnnnnnn, where nnnnnn is your student ID. 
 import java.lang.*;
@@ -43,30 +41,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	mySpace = space; myFrequencer.setSpace(space); 
     }
     
-    double f(byte[] target, int start, int end){
-
-	//if(start == end)return 0.0;
-        double valuer = Double.MAX_VALUE;
-        double[] valuef = new double[target.length];
-        
-        byte [] targetf = new byte[end - start];
-	for(int i = 0; i<end - start; i++) { 
-            targetf[i] = target[i]; 
-        }
-        
-        myFrequencer.setTarget(subBytes(targetf, start, end));
-        valuef[0] = iq(myFrequencer.frequency());
-        
-        for(int mid = 1; mid < end; mid++){
-            myFrequencer.setTarget(subBytes(targetf, mid, end));
-            valuef[mid] = f(targetf,start,mid) + iq(myFrequencer.frequency());
-        }        
-        
-        for(int i = 0; i < end; i++){
-            valuer = Math.min(valuer,valuef[i]);
-        }
-        return valuer;
-    }
+   
 
     public double estimation(){
 	//boolean [] partition = new boolean[myTarget.length+1];
@@ -160,9 +135,3 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	System.out.println(">00 "+value);
     }
 }
-				  
-			       
-
-	
-    
-
