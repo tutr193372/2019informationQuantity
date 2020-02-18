@@ -77,6 +77,31 @@ public class Frequencer implements FrequencerInterface {
         // この行は変更しなければいけない。
     }
 
+    private void quicksort(int[] array, int left, int right){
+        if(left <= right){
+            int p = right;
+            int l = left;
+            int r = right;
+            while(l <= r){
+                while(suffixCompare(suffixArray[l],suffixArray[p]) == -1){
+                    l++;
+                }
+                while(suffixCompare(suffixArray[r],suffixArray[p]) == 1){
+                    r--;
+                }
+                if(l <= r){
+                    int tmp = array[l];
+                    array[l] = array[r];
+                    array[r] = tmp;
+                    l++;
+                    r--;
+                }
+            }
+            quicksort(array, left, r);
+            quicksort(array, l, right);
+        }
+    }
+
     public void setSpace(byte[] space) {
         // suffixArrayの前処理は、setSpaceで定義せよ。
         mySpace = space;
@@ -89,16 +114,8 @@ public class Frequencer implements FrequencerInterface {
             suffixArray[i] = i; // Please note that each suffix is expressed by one integer.
         }
         //
+	quicksort(suffixArray, 0, suffixArray.length-1);
         // ここに、int suffixArrayをソートするコードを書け。
-        for (int i = 0; i <  mySpace.length - 1; i++) {
-            for (int j =  mySpace.length - 1; j > i; j--) {
-                if (suffixCompare(suffixArray[j - 1], suffixArray[j]) == 1) {
-                    int tmp = suffixArray[j - 1];
-                    suffixArray[j - 1] = suffixArray[j];
-                    suffixArray[j] = tmp;
-                }
-            }
-        }
         // 順番はsuffixCompareで定義されるものとする。
     }
 
@@ -282,7 +299,7 @@ public class Frequencer implements FrequencerInterface {
              * 5:Ho 6:Ho Hi Ho 7:i Ho 8:i Ho Hi Ho 9:o A:o Hi Ho
              */
 
-            frequencerObject.setTarget(" ".getBytes());
+            frequencerObject.setTarget("H".getBytes());
             //
             // **** Please write code to check subByteStartIndex, and subByteEndIndex
             //
